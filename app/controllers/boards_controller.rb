@@ -17,6 +17,22 @@ class BoardsController < ApplicationController
  	     redirect_to "/boards"
   end
 
+   def edit
+     @board = Board.find(params[:id])
+   end
+
+  def update
+    @board = Board.find(params[:id])
+    @board.update_attributes(params_board)#更新
+    redirect_to "/boards/#{@board.id}"
+  end
+
+  def destroy
+    @board = Board.find(params[:id])
+    @board.destroy
+    redirect_to "/boards"
+  end
+
  private
 
  	def params_board
