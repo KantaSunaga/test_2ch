@@ -1,7 +1,27 @@
 
- <%= link_to "スレッド一覧に戻る", boards_path %>
-	 <hr>
-	 <h1><%= @board.title %></h1>
-   <%= link_to "タイトルを編集する", edit_board_path(@board) %>
-   <%= link_to "削除する", board_path(@board), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-<hr>
+<div class="wrapper wrapper__bg">
+	 	<div class="container">
+	 	<%= link_to "スレッド一覧に戻る", boards_path %>
+	 	<hr>
+	 	<div class="board">
+	 	<h1 class="board--name"><%= @board.title %></h1>
+	 	</div>
+	 	<%= link_to "タイトルを編集する", edit_board_path(@board) %>
+	 	<%= link_to "削除する", board_path(@board), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+	 	<hr>
+    <div class="comments">
+	 	<% @board.comments.each do |comment| %>
+	 	  <%= comment.name %>
+
+    	<%= comment.content %>
+    	<%= link_to "削除する", board_comment_path(@board, comment), method: :delete, data: { confirm: "本当に削除しますか?" } %> <br>
+	 	<% end %>
+	 	</div>
+	 	<hr>
+    <%= form_for @comment, url: board_comments_path(@board, @comment) do |f| %>
+	 	名前: <%= f.text_field :name %> <br>
+	 	コメント: <%= f.text_area :content %> <br>
+	 	<%= f.submit %>
+	 	<% end %>
+	 	</div>
+	 </div>

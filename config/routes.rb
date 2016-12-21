@@ -7,5 +7,7 @@ Rails.application.routes.draw do
  #  get 'boards/:id/edit' => 'boards#edit'
  #  put 'boards/:id' => 'boards#update'
  #  delete 'boards/:id' => 'boards#destroy'
-  resources :boards
+  resources :boards do
+	     resources :comments, only: [:create, :destroy]
+	   end
 end

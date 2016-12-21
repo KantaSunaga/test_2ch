@@ -4,7 +4,8 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @board = Board.find(params[:id])#paramaからイDを取得して、findで探し出したレコードをboardに追加
+     @board = Board.includes(:comments).find(params[:id])#paramaからイDを取得して、findで探し出したレコードをboardに追加
+     @comment = Comment.new
   end
 
   def new
@@ -13,8 +14,11 @@ class BoardsController < ApplicationController
 
   def create
  	     @board = Board.new(params_board)
- 	     @board.save
- 	      redirect_to board_url(@board)
+       if @board.save
+	       redirect_to board_url(@board)
+	     else
+	       render "new"
+       end
   end
 
    def edit
@@ -23,8 +27,11 @@ class BoardsController < ApplicationController
 
   def update
     @board = Board.find(params[:id])
-    @board.update_attributes(params_board)#更新
-     redirect_to board_url(@board)
+    if @board.update_attributes(params_board)
+	       redirect_to board_url(@board)
+	     else
+	       render "edit"
+    end
   end
 
   def destroy
